@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LoL Coach — Ton assistant de matchups</title>
+<meta name="description" content="Coach League of Legends : tous les champions, conseils de matchup, optimisation de build contre la compo adverse, fond d'écran personnalisable.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%9A%94%EF%B8%8F</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="bg-layer" aria-hidden="true"></div>
+<div id="bg-overlay" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-icon">⚔️</span>
+    <div class="brand-text">
+      <span class="brand-title">LoL Coach</span>
+      <span class="brand-sub" id="patch-badge">Chargement du patch…</span>
+    </div>
+  </div>
+  <nav class="tabs" role="tablist" aria-label="Navigation principale">
+    <button class="tab-btn active" data-tab="champions" role="tab" aria-selected="true">Champions</button>
+    <button class="tab-btn" data-tab="matchup" role="tab" aria-selected="false">Coach de matchup</button>
+    <button class="tab-btn" data-tab="build" role="tab" aria-selected="false">Compo &amp; Build</button>
+    <button class="tab-btn" data-tab="appearance" role="tab" aria-selected="false">Apparence</button>
+  </nav>
+</header>
+
+<main id="app">
+
+  <!-- CHAMPIONS TAB -->
+  <section id="tab-champions" class="tab-panel active">
+    <div class="panel-header">
+      <h1>Tous les champions</h1>
+      <p class="panel-desc">Liste complète chargée en direct depuis l'API officielle Riot Data Dragon — toujours à jour avec le dernier patch.</p>
+    </div>
+    <div class="toolbar">
+      <input type="search" id="champ-search" placeholder="Rechercher un champion…" autocomplete="off">
+      <div class="chip-row" id="role-filters"></div>
+    </div>
+    <div id="champ-grid" class="champ-grid">
+      <p class="loading">Chargement des champions…</p>
+    </div>
+  </section>
+
+  <!-- MATCHUP TAB -->
+  <section id="tab-matchup" class="tab-panel">
+    <div class="panel-header">
+      <h1>Coach de matchup</h1>
+      <p class="panel-desc">Choisis ton champion et ton adversaire en lane pour recevoir des conseils : skill order, summoners, item de départ, et comment gagner la lane.</p>
+    </div>
+
+    <div class="picker-row">
+      <div class="picker">
+        <label for="my-champ-matchup">Ton champion</label>
+        <select id="my-champ-matchup"></select>
+      </div>
+      <div class="vs-icon">VS</div>
+      <div class="picker">
+        <label for="enemy-champ-matchup">Adversaire (lane)</label>
+        <select id="enemy-champ-matchup"></select>
+      </div>
+    </div>
+
+    <div id="matchup-result" class="matchup-result"></div>
+  </section>
+
+  <!-- BUILD TAB -->
+  <section id="tab-build" class="tab-panel">
+    <div class="panel-header">
+      <h1>Compo adverse &amp; optimisation de build</h1>
+      <p class="panel-desc">Indique ton champion et la composition adverse (jusqu'à 5 champions) pour obtenir des recommandations de build adaptées aux menaces en face.</p>
+    </div>
+
+    <div class="picker">
+      <label for="my-champ-build">Ton champion</label>
+      <select id="my-champ-build"></select>
+    </div>
+
+    <div class="enemy-team-grid" id="enemy-team-grid">
+      <!-- 5 selects injected by JS -->
+    </div>
+
+    <button id="analyze-btn" class="primary-btn">Analyser la compo adverse</button>
+
+    <div id="build-result" class="build-result"></div>
+  </section>
+
+  <!-- APPEARANCE TAB -->
+  <section id="tab-appearance" class="tab-panel">
+    <div class="panel-header">
+      <h1>Apparence</h1>
+      <p class="panel-desc">Choisis un champion et un skin : son splash art devient le fond d'écran de l'application. Ton choix est mémorisé sur cet appareil.</p>
+    </div>
+
+    <div class="picker-row">
+      <div class="picker">
+        <label for="bg-champ-select">Champion</label>
+        <select id="bg-champ-select"></select>
+      </div>
+      <div class="picker">
+        <label for="bg-skin-select">Skin</label>
+        <select id="bg-skin-select"></select>
+      </div>
+    </div>
+
+    <div class="bg-preview-wrap">
+      <img id="bg-preview" alt="Aperçu du skin sélectionné">
+    </div>
+
+    <div class="appearance-actions">
+      <button id="apply-bg-btn" class="primary-btn">Appliquer comme fond d'écran</button>
+      <button id="reset-bg-btn" class="secondary-btn">Réinitialiser (fond par défaut)</button>
+      <label class="overlay-slider">
+        Opacité du voile
+        <input type="range" id="overlay-opacity" min="0.35" max="0.9" step="0.05" value="0.65">
+      </label>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>LoL Coach — projet perso, non affilié à Riot Games. Données de champions et images via Data Dragon (Riot Games API). Guide de matchup Garen rédigé par l'auteur du projet.</p>
+</footer>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
