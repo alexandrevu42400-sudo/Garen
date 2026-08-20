@@ -57,6 +57,8 @@ async function init() {
   renderMatchup();
 
   document.getElementById("analyze-btn").addEventListener("click", renderBuildAnalysis);
+  document.getElementById("my-champ-build").addEventListener("change", renderBuildAnalysis);
+  renderBuildAnalysis();
 
   document.getElementById("bg-champ-select").addEventListener("change", onBgChampChange);
   document.getElementById("apply-bg-btn").addEventListener("click", applyBackground);
@@ -184,6 +186,7 @@ function setupEnemyTeamGrid(champs) {
       opt.textContent = c.name;
       select.appendChild(opt);
     }
+    select.addEventListener("change", renderBuildAnalysis);
     wrap.appendChild(label);
     wrap.appendChild(select);
     grid.appendChild(wrap);
@@ -300,7 +303,7 @@ function renderBuildAnalysis() {
   const container = document.getElementById("build-result");
 
   if (enemyChamps.length === 0) {
-    container.innerHTML = `<p class="notice">Sélectionne au moins un champion adverse, puis clique sur "Analyser".</p>`;
+    container.innerHTML = `<p class="notice">Sélectionne au moins un champion adverse ci-dessus — l'analyse se met à jour automatiquement (le bouton "Analyser" fonctionne aussi si tu préfères).</p>`;
     return;
   }
 
